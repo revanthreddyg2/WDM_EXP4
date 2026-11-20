@@ -1,5 +1,5 @@
 ### EX4 Implementation of Cluster and Visitor Segmentation for Navigation patterns
-### DATE: 
+### DATE:20/11/26
 ### AIM: To implement Cluster and Visitor Segmentation for Navigation patterns in Python.
 ### Description:
 <div align= "justify">Cluster visitor segmentation refers to the process of grouping or categorizing visitors to a website, 
@@ -15,35 +15,60 @@
 
 ### Program:
 ```python
-# Visitor segmentation based on characteristics
-# read the data
-/*WRITE YOUR CODE HERE
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
-# Perform segmentation based on characteristics (e.g., age groups)
-/*WRITE YOUR CODE HERE
+df = pd.read_csv("clustervisitor.csv")
+
+X = df[['Age']]
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+
+df['Cluster'] = kmeans.fit_predict(X)
+
+print(df)
+
+for i in range(3):
+    print(f"\nCluster {i}")
+    print(df[df['Cluster'] == i])
+
 
 ```
 ### Output:
+<img width="434" height="527" alt="image" src="https://github.com/user-attachments/assets/b00d9444-3837-4681-a6a2-1993cf794c45" />
+<img width="419" height="231" alt="image" src="https://github.com/user-attachments/assets/e7d60653-bd83-4c76-8bdc-d821fd8a941f" />
+<img width="421" height="217" alt="image" src="https://github.com/user-attachments/assets/265385cf-a76e-4641-835e-2ca6a71d7714" />
+<img width="400" height="196" alt="image" src="https://github.com/user-attachments/assets/a94610ef-6368-4189-80f7-a94677fd3541" />
 
 ### Visualization:
 ```python
-# Create a list to store counts of visitors in each age group
-/*WRITE YOUR CODE HERE
+import matplotlib.pyplot as plt
 
-# Count visitors in each age group
-/*WRITE YOUR CODE HERE
-    
-# Define age group labels and plot a bar chart
-/*WRITE YOUR CODE HERE
+plt.figure(figsize=(8,5))
 
-plt.figure(figsize=(8, 6))
-plt.bar(age_group_labels, visitor_counts, color='skyblue')
-plt.xlabel('Age Groups')
-plt.ylabel('Number of Visitors')
-plt.title('Visitor Distribution Across Age Groups')
+for i in range(3):
+    cluster = df[df['Cluster'] == i]
+    plt.scatter(cluster['Age'], cluster['Cluster'], label=f'Cluster {i}')
+
+plt.scatter(
+    kmeans.cluster_centers_,
+    range(3),
+    color='red',
+    marker='X',
+    s=200,
+    label='Centroids'
+)
+
+plt.xlabel("Age")
+plt.ylabel("Cluster")
+plt.title("Visitor Segmentation using K-Means")
+plt.legend()
+plt.grid(True)
 plt.show()
 ```
 ### Output:
+<img width="692" height="448" alt="image" src="https://github.com/user-attachments/assets/639066b7-9126-4c23-b843-4ca89ba67361" />
 
 
 ### Result:
